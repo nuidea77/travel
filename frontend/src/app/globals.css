@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #16302e;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-7.5xl px-4 sm:px-6 lg:px-8;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2;
+  }
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700;
+  }
+  .btn-accent {
+    @apply btn bg-accent-500 text-primary-950 hover:bg-accent-400;
+  }
+  .btn-outline {
+    @apply btn border-2 border-primary-600 text-primary-700 hover:bg-primary-50;
+  }
+  .btn-lg {
+    @apply px-7 py-3.5 text-base;
+  }
+  .btn-md {
+    @apply px-5 py-2.5 text-sm;
+  }
+  .btn-sm {
+    @apply px-4 py-2 text-xs;
+  }
+  .section {
+    @apply py-16 lg:py-24;
+  }
+  .prose-site {
+    @apply text-slate-600 leading-relaxed;
+  }
+  .prose-site p {
+    @apply mb-4;
+  }
+  .prose-site h2 {
+    @apply mb-3 mt-8 text-2xl font-bold text-slate-900;
+  }
+  .prose-site h3 {
+    @apply mb-2 mt-6 text-xl font-bold text-slate-900;
+  }
+  .prose-site ul {
+    @apply mb-4 list-disc space-y-1 pl-6;
+  }
+  .prose-site ol {
+    @apply mb-4 list-decimal space-y-1 pl-6;
+  }
+  .prose-site strong {
+    @apply font-semibold text-slate-800;
+  }
+}
+
+/* subtle image hover zoom used on cards */
+.img-zoom {
+  transition: transform 0.5s ease;
+}
+.group:hover .img-zoom {
+  transform: scale(1.05);
+}
+
+/* hide scrollbar for horizontal pill rows */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
