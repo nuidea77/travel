@@ -84,7 +84,7 @@ export default async function TourDetailPage({
               </Link>
             ))}
           </div>
-          <h1 className="mt-4 max-w-3xl text-3xl font-extrabold leading-tight tracking-tight lg:text-5xl">
+          <h1 className="mt-4 max-w-3xl font-display text-3xl font-semibold leading-tight tracking-tight lg:text-[3.4rem] lg:leading-[1.1]">
             {tour.title}
           </h1>
           <p className="mt-3 max-w-2xl text-primary-50/90">{tour.excerpt}</p>
@@ -107,12 +107,40 @@ export default async function TourDetailPage({
         </div>
       </section>
 
+      {/* in-page nav */}
+      <nav
+        aria-label="Tour sections"
+        className="sticky top-[63px] z-30 border-b border-slate-100 bg-white/95 shadow-sm backdrop-blur-md lg:top-[95px]"
+      >
+        <div className="container-site no-scrollbar flex items-center gap-1 overflow-x-auto py-2">
+          {[
+            ["#overview", "Overview"],
+            ["#itinerary", "Itinerary"],
+            ["#prices", "Prices"],
+            ...(departures.length > 0 ? [["#departures", "Departures"]] : []),
+            ["#included", "Included"],
+            ["#reviews", "Reviews"],
+          ].map(([href, label]) => (
+            <a
+              key={href}
+              href={href}
+              className="shrink-0 rounded-full px-4 py-1.5 text-sm font-bold text-slate-600 transition-colors hover:bg-primary-50 hover:text-primary-700"
+            >
+              {label}
+            </a>
+          ))}
+          <a href="#book" className="btn-accent btn-sm ml-auto hidden shrink-0 sm:inline-flex">
+            Book this tour
+          </a>
+        </div>
+      </nav>
+
       <div className="container-site section grid gap-12 !pt-12 lg:grid-cols-[1fr_380px]">
         {/* ── main column ── */}
         <div className="min-w-0">
           {/* overview */}
-          <section id="overview">
-            <h2 className="text-2xl font-extrabold text-slate-900">Overview</h2>
+          <section id="overview" className="scroll-mt-40">
+            <h2 className="font-display text-[1.75rem] font-semibold text-slate-900">Overview</h2>
             <div className="prose-site mt-4 whitespace-pre-line">{tour.overview}</div>
             {tour.highlights && (
               <div className="mt-6 rounded-2xl bg-primary-50 p-6">
@@ -131,8 +159,8 @@ export default async function TourDetailPage({
 
           {/* itinerary */}
           {tour.itinerary_days && tour.itinerary_days.length > 0 && (
-            <section id="itinerary" className="mt-12">
-              <h2 className="text-2xl font-extrabold text-slate-900">
+            <section id="itinerary" className="scroll-mt-40 mt-12">
+              <h2 className="font-display text-[1.75rem] font-semibold text-slate-900">
                 Day-by-day itinerary
               </h2>
               <p className="mt-1 text-sm text-slate-500">
@@ -146,8 +174,8 @@ export default async function TourDetailPage({
 
           {/* pricing */}
           {tour.prices && tour.prices.length > 0 && (
-            <section id="prices" className="mt-12">
-              <h2 className="text-2xl font-extrabold text-slate-900">Prices</h2>
+            <section id="prices" className="scroll-mt-40 mt-12">
+              <h2 className="font-display text-[1.75rem] font-semibold text-slate-900">Prices</h2>
               <p className="mt-1 text-sm text-slate-500">
                 Per person, based on the size of your party. Larger groups
                 travel cheaper.
@@ -161,17 +189,28 @@ export default async function TourDetailPage({
                     </tr>
                   </thead>
                   <tbody>
-                    {tour.prices.map((tier) => (
-                      <tr key={tier.id} className="border-t border-slate-100">
-                        <td className="px-5 py-3.5 font-semibold text-slate-800">
-                          <Users size={14} className="mr-2 inline text-primary-600" />
-                          {tier.min_people}–{tier.max_people} travelers
-                        </td>
-                        <td className="px-5 py-3.5 text-lg font-extrabold text-primary-700">
-                          ${Number(tier.price).toLocaleString()}
-                        </td>
-                      </tr>
-                    ))}
+                    {tour.prices.map((tier, i) => {
+                      const isBest = i === tour.prices!.length - 1;
+                      return (
+                        <tr
+                          key={tier.id}
+                          className={`border-t border-slate-100 ${isBest ? "bg-primary-50/60" : ""}`}
+                        >
+                          <td className="px-5 py-3.5 font-semibold text-slate-800">
+                            <Users size={14} className="mr-2 inline text-primary-600" />
+                            {tier.min_people}–{tier.max_people} travelers
+                            {isBest && (
+                              <span className="ml-2.5 rounded-full bg-primary-600 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+                                Best value
+                              </span>
+                            )}
+                          </td>
+                          <td className="px-5 py-3.5 text-lg font-extrabold text-primary-700">
+                            ${Number(tier.price).toLocaleString()}
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -180,8 +219,8 @@ export default async function TourDetailPage({
 
           {/* departures */}
           {departures.length > 0 && (
-            <section id="departures" className="mt-12">
-              <h2 className="text-2xl font-extrabold text-slate-900">
+            <section id="departures" className="scroll-mt-40 mt-12">
+              <h2 className="font-display text-[1.75rem] font-semibold text-slate-900">
                 Upcoming departures
               </h2>
               <div className="mt-5 space-y-3">
@@ -225,9 +264,9 @@ export default async function TourDetailPage({
           )}
 
           {/* included / excluded */}
-          <section id="included" className="mt-12 grid gap-6 md:grid-cols-2">
+          <section id="included" className="scroll-mt-40 mt-12 grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl border border-primary-100 bg-primary-50/50 p-6">
-              <h2 className="text-lg font-extrabold text-slate-900">What&apos;s included</h2>
+              <h2 className="font-display text-xl font-semibold text-slate-900">What&apos;s included</h2>
               <ul className="mt-4 space-y-2.5">
                 {(tour.included ?? []).map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-slate-700">
@@ -238,7 +277,7 @@ export default async function TourDetailPage({
               </ul>
             </div>
             <div className="rounded-2xl border border-slate-200 p-6">
-              <h2 className="text-lg font-extrabold text-slate-900">Not included</h2>
+              <h2 className="font-display text-xl font-semibold text-slate-900">Not included</h2>
               <ul className="mt-4 space-y-2.5">
                 {(tour.excluded ?? []).map((item) => (
                   <li key={item} className="flex items-start gap-2 text-sm text-slate-600">
@@ -252,8 +291,8 @@ export default async function TourDetailPage({
 
           {/* good to know */}
           {tour.good_to_know && tour.good_to_know.length > 0 && (
-            <section id="good-to-know" className="mt-12">
-              <h2 className="text-2xl font-extrabold text-slate-900">Good to know</h2>
+            <section id="good-to-know" className="scroll-mt-40 mt-12">
+              <h2 className="font-display text-[1.75rem] font-semibold text-slate-900">Good to know</h2>
               <div className="mt-5 grid gap-5 sm:grid-cols-2">
                 {tour.good_to_know.map((item) => (
                   <div key={item.title} className="rounded-2xl bg-slate-50 p-5">
@@ -269,8 +308,8 @@ export default async function TourDetailPage({
 
           {/* reviews */}
           {tour.testimonials && tour.testimonials.length > 0 && (
-            <section id="reviews" className="mt-12">
-              <h2 className="text-2xl font-extrabold text-slate-900">
+            <section id="reviews" className="scroll-mt-40 mt-12">
+              <h2 className="font-display text-[1.75rem] font-semibold text-slate-900">
                 Reviews from this tour
               </h2>
               <div className="mt-5 space-y-5">

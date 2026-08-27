@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import type { Settings } from "@/lib/types";
 import Logo from "./Logo";
+import NewsletterForm from "./NewsletterForm";
 
 type IconProps = { size?: number };
 
@@ -117,6 +118,18 @@ export default function Footer({ settings }: { settings: Settings }) {
   return (
     <footer className="bg-primary-950 text-primary-100">
       <div className="container-site section !pb-10">
+        <div className="mb-14 flex flex-col items-start justify-between gap-6 rounded-3xl bg-primary-900/50 p-7 ring-1 ring-primary-800/70 lg:flex-row lg:items-center lg:p-9">
+          <div>
+            <h2 className="font-display text-2xl font-semibold text-white">
+              Steppe stories &amp; departure deals
+            </h2>
+            <p className="mt-1 text-sm text-primary-200/80">
+              One email a month — new itineraries, festival dates and honest
+              travel advice. No noise.
+            </p>
+          </div>
+          <NewsletterForm />
+        </div>
         <div className="grid gap-10 lg:grid-cols-6">
           <div className="lg:col-span-2">
             <Link href="/" aria-label="Home">

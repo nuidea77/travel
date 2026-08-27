@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Fraunces } from "next/font/google";
 import "./globals.css";
 import { getSettings } from "@/lib/api";
 import Header from "@/components/Header";
@@ -9,6 +10,13 @@ const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
+});
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 export const dynamic = "force-dynamic";
@@ -33,7 +41,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} font-sans antialiased`}>
+      <body
+        className={`${geistSans.variable} ${fraunces.variable} font-sans antialiased`}
+      >
         <Header settings={settings} />
         <main className="min-h-screen">{children}</main>
         <Footer settings={settings} />

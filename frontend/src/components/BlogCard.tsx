@@ -14,7 +14,7 @@ export function formatDate(value: string | null | undefined): string {
 
 export default function BlogCard({ post }: { post: Post }) {
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-card transition-shadow hover:shadow-card-hover">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card-hover">
       <Link
         href={`/blogs/${post.slug}`}
         className="relative block aspect-[16/9] overflow-hidden"
@@ -41,7 +41,7 @@ export default function BlogCard({ post }: { post: Post }) {
             <Clock3 size={13} /> {post.read_time} min read
           </span>
         </div>
-        <h3 className="mt-2.5 text-lg font-bold leading-snug text-slate-900">
+        <h3 className="mt-2.5 font-display text-xl font-semibold leading-snug text-slate-900">
           <Link href={`/blogs/${post.slug}`} className="hover:text-primary-700">
             {post.title}
           </Link>

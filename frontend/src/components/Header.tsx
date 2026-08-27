@@ -58,7 +58,7 @@ export default function Header({ settings }: { settings: Settings }) {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-slate-100/80 bg-white/95 shadow-sm backdrop-blur-md">
       {/* top bar */}
       <div className="hidden bg-primary-900 text-primary-50 lg:block">
         <div className="container-site flex items-center justify-between py-1.5 text-xs">
