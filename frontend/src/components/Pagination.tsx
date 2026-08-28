@@ -34,15 +34,14 @@ export default function Pagination({
     items.push(p);
   });
 
+  const navCls =
+    "flex h-9 w-9 items-center justify-center rounded-md border border-slate-200 text-slate-500 transition-colors hover:border-primary-700 hover:text-primary-700";
+
   return (
     <nav className="mt-10 flex items-center justify-center gap-2" aria-label="Pagination">
       {currentPage > 1 && (
-        <Link
-          href={hrefFor(currentPage - 1)}
-          className="rounded-full border-2 border-slate-200 p-2 text-slate-500 hover:border-primary-600 hover:text-primary-700"
-          aria-label="Previous page"
-        >
-          <ChevronLeft size={16} />
+        <Link href={hrefFor(currentPage - 1)} className={navCls} aria-label="Previous page">
+          <ChevronLeft size={15} />
         </Link>
       )}
       {items.map((item, i) =>
@@ -55,10 +54,10 @@ export default function Pagination({
             key={item}
             href={hrefFor(item)}
             aria-current={item === currentPage ? "page" : undefined}
-            className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold transition-colors ${
+            className={`flex h-9 w-9 items-center justify-center rounded-md text-sm font-bold transition-colors ${
               item === currentPage
-                ? "bg-primary-600 text-white"
-                : "text-slate-600 hover:bg-primary-50"
+                ? "bg-primary-700 text-white shadow-sm"
+                : "border border-slate-200 text-slate-600 hover:border-primary-700 hover:text-primary-700"
             }`}
           >
             {item}
@@ -66,12 +65,8 @@ export default function Pagination({
         ),
       )}
       {currentPage < lastPage && (
-        <Link
-          href={hrefFor(currentPage + 1)}
-          className="rounded-full border-2 border-slate-200 p-2 text-slate-500 hover:border-primary-600 hover:text-primary-700"
-          aria-label="Next page"
-        >
-          <ChevronRight size={16} />
+        <Link href={hrefFor(currentPage + 1)} className={navCls} aria-label="Next page">
+          <ChevronRight size={15} />
         </Link>
       )}
     </nav>

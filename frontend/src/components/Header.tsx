@@ -3,31 +3,22 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  ChevronDown,
-  Mail,
-  Menu,
-  MessageCircle,
-  Phone,
-  X,
-} from "lucide-react";
+import { Mail, Menu, MessageCircle, Phone, X } from "lucide-react";
 import type { Settings } from "@/lib/types";
 import Logo from "./Logo";
 
-type NavChild = { label: string; href: string };
-type NavItem = { label: string; href: string; children?: NavChild[] };
+type NavGroup = { label: string; href: string; children?: { label: string; href: string }[] };
 
-const NAV: NavItem[] = [
+const NAV: NavGroup[] = [
   {
     label: "Tours",
     href: "/tours",
     children: [
       { label: "All tours", href: "/tours" },
-      { label: "Join a group", href: "/tours?type=join" },
-      { label: "Private tours", href: "/tours?type=private" },
-      { label: "Best sellers", href: "/tours?category=best-seller" },
-      { label: "Naadam Festival", href: "/tours?category=naadam-events" },
-      { label: "Winter tours", href: "/tours?category=winter" },
+      { label: "Best seller tours", href: "/tours?category=best-seller" },
+      { label: "Join in tours", href: "/tours?type=join" },
+      { label: "Tailor made tours", href: "/tours?type=private" },
+      { label: "Trip calendar", href: "/trip-calendar" },
     ],
   },
   {
@@ -40,7 +31,16 @@ const NAV: NavItem[] = [
       { label: "Things to know", href: "/blogs?category=things-to-know" },
     ],
   },
-  { label: "Blogs", href: "/blogs" },
+  {
+    label: "Blogs",
+    href: "/blogs",
+    children: [
+      { label: "All articles", href: "/blogs" },
+      { label: "Travel tips", href: "/blogs?category=travel-tips" },
+      { label: "Places to visit", href: "/blogs?category=places-to-visit" },
+      { label: "News & events", href: "/blogs?category=news-events" },
+    ],
+  },
   { label: "Trip Calendar", href: "/trip-calendar" },
   { label: "About Us", href: "/about-us" },
   { label: "Car Rental", href: "/car-rental" },
@@ -48,140 +48,109 @@ const NAV: NavItem[] = [
 ];
 
 export default function Header({ settings }: { settings: Settings }) {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => setOpen(false), [pathname]);
+
   useEffect(() => {
-    setMobileOpen(false);
-    setOpenDropdown(null);
-  }, [pathname]);
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  const waLink = `https://wa.me/${settings.whatsapp.replace(/[^\d]/g, "")}`;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-slate-100/80 bg-white/95 shadow-sm backdrop-blur-md">
-      {/* top bar */}
-      <div className="hidden bg-primary-900 text-primary-50 lg:block">
-        <div className="container-site flex items-center justify-between py-1.5 text-xs">
-          <p className="font-medium tracking-wide">{settings.tagline}</p>
-          <div className="flex items-center gap-5">
-            <a href={`tel:${settings.phone}`} className="flex items-center gap-1.5 hover:text-white">
-              <Phone size={13} /> {settings.phone}
-            </a>
-            <a
-              href={`https://wa.me/${settings.whatsapp.replace(/[^\d]/g, "")}`}
-              className="flex items-center gap-1.5 hover:text-white"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MessageCircle size={13} /> WhatsApp
-            </a>
-            <a href={`mailto:${settings.email}`} className="flex items-center gap-1.5 hover:text-white">
-              <Mail size={13} /> {settings.email}
-            </a>
-          </div>
-        </div>
-      </div>
+    <header className="sticky top-0 z-50 border-b border-slate-100 bg-white">
+      <div className="container-site grid grid-cols-[1fr_auto_1fr] items-center py-2.5">
+        <button
+          onClick={() => setOpen(true)}
+          className="flex w-fit items-center gap-2 rounded-lg px-2 py-2 text-sm font-bold uppercase tracking-wide text-slate-800 transition-colors hover:bg-slate-100"
+          aria-label="Open menu"
+          aria-expanded={open}
+        >
+          <Menu size={20} />
+          <span className="hidden sm:inline">Menu</span>
+        </button>
 
-      {/* main nav */}
-      <div className="container-site flex items-center justify-between py-3">
-        <Link href="/" aria-label="Home">
+        <Link href="/" aria-label="Home" className="justify-self-center">
           <Logo name={settings.site_name} />
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
-          {NAV.map((item) =>
-            item.children ? (
-              <div
-                key={item.label}
-                className="relative"
-                onMouseEnter={() => setOpenDropdown(item.label)}
-                onMouseLeave={() => setOpenDropdown(null)}
+        <div className="flex items-center justify-end">
+          <a
+            href={waLink}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-whatsapp btn-sm sm:btn-md !gap-2"
+          >
+            <MessageCircle size={16} />
+            <span className="hidden md:inline">Chat with us on WhatsApp</span>
+            <span className="md:hidden">WhatsApp</span>
+          </a>
+        </div>
+      </div>
+
+      {/* drawer */}
+      {open && (
+        <div className="fixed inset-0 z-[70]">
+          <div
+            className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
+          />
+          <div className="absolute inset-y-0 left-0 flex w-[92%] max-w-md flex-col overflow-y-auto bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+              <Logo name={settings.site_name} />
+              <button
+                onClick={() => setOpen(false)}
+                className="rounded-lg p-2 text-slate-600 transition-colors hover:bg-slate-100"
+                aria-label="Close menu"
               >
-                <Link
-                  href={item.href}
-                  className="flex items-center gap-1 rounded-full px-3.5 py-2 text-sm font-semibold text-slate-700 hover:bg-primary-50 hover:text-primary-700"
-                >
-                  {item.label}
-                  <ChevronDown size={14} className="mt-0.5" />
-                </Link>
-                {openDropdown === item.label && (
-                  <div className="absolute left-0 top-full w-56 pt-2">
-                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white py-2 shadow-card">
-                      {item.children.map((child) => (
+                <X size={22} />
+              </button>
+            </div>
+
+            <nav className="flex-1 px-6 py-5" aria-label="Main">
+              {NAV.map((group) => (
+                <div key={group.label} className="border-b border-slate-100 py-3 last:border-0">
+                  <Link
+                    href={group.href}
+                    className="block text-[15px] font-extrabold uppercase tracking-wide text-slate-900 transition-colors hover:text-primary-700"
+                  >
+                    {group.label}
+                  </Link>
+                  {group.children && (
+                    <div className="mt-2 grid grid-cols-2 gap-x-4">
+                      {group.children.map((child) => (
                         <Link
                           key={child.label}
                           href={child.href}
-                          className="block px-4 py-2 text-sm text-slate-600 hover:bg-primary-50 hover:text-primary-700"
+                          className="rounded py-1.5 text-sm text-slate-500 transition-colors hover:text-primary-700"
                         >
                           {child.label}
                         </Link>
                       ))}
                     </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="rounded-full px-3.5 py-2 text-sm font-semibold text-slate-700 hover:bg-primary-50 hover:text-primary-700"
-              >
-                {item.label}
-              </Link>
-            ),
-          )}
-          <Link href="/tours" className="btn-accent btn-md ml-2">
-            Book a tour
-          </Link>
-        </nav>
+                  )}
+                </div>
+              ))}
+            </nav>
 
-        <button
-          className="rounded-lg p-2 text-slate-700 hover:bg-slate-100 lg:hidden"
-          onClick={() => setMobileOpen((v) => !v)}
-          aria-label="Toggle menu"
-          aria-expanded={mobileOpen}
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* mobile menu */}
-      {mobileOpen && (
-        <nav className="border-t border-slate-100 bg-white lg:hidden" aria-label="Mobile">
-          <div className="container-site space-y-1 py-4">
-            {NAV.map((item) => (
-              <div key={item.label}>
-                <Link
-                  href={item.href}
-                  className="block rounded-lg px-3 py-2.5 text-sm font-semibold text-slate-800 hover:bg-primary-50"
-                >
-                  {item.label}
-                </Link>
-                {item.children && (
-                  <div className="ml-3 border-l border-slate-100 pl-3">
-                    {item.children.slice(1).map((child) => (
-                      <Link
-                        key={child.label}
-                        href={child.href}
-                        className="block rounded-lg px-3 py-2 text-sm text-slate-500 hover:bg-primary-50"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            <div className="flex gap-3 pt-3">
-              <a href={`tel:${settings.phone}`} className="btn-outline btn-md flex-1">
-                <Phone size={15} /> Call
+            <div className="space-y-2.5 border-t border-slate-100 bg-slate-50 px-6 py-5 text-sm">
+              <a href={`tel:${settings.phone}`} className="flex items-center gap-2.5 font-semibold text-slate-700 hover:text-primary-700">
+                <Phone size={15} className="text-primary-700" /> {settings.phone}
               </a>
-              <Link href="/tours" className="btn-accent btn-md flex-1">
-                Book a tour
-              </Link>
+              <a href={`mailto:${settings.email}`} className="flex items-center gap-2.5 font-semibold text-slate-700 hover:text-primary-700">
+                <Mail size={15} className="text-primary-700" /> {settings.email}
+              </a>
+              <a href={waLink} target="_blank" rel="noreferrer" className="btn-whatsapp btn-md mt-2 w-full">
+                <MessageCircle size={16} /> Chat on WhatsApp
+              </a>
             </div>
           </div>
-        </nav>
+        </div>
       )}
     </header>
   );

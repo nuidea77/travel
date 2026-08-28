@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
 import type { Settings } from "@/lib/types";
 import Logo from "./Logo";
-import NewsletterForm from "./NewsletterForm";
+import AwardBadge from "./AwardBadge";
 
 type IconProps = { size?: number };
 
@@ -62,48 +61,6 @@ function XIcon({ size = 15 }: IconProps) {
   );
 }
 
-const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
-  {
-    title: "Tours",
-    links: [
-      { label: "All tours", href: "/tours" },
-      { label: "Best seller tours", href: "/tours?category=best-seller" },
-      { label: "Join a group", href: "/tours?type=join" },
-      { label: "Private & tailor-made", href: "/tours?type=private" },
-      { label: "Trip calendar", href: "/trip-calendar" },
-    ],
-  },
-  {
-    title: "About Mongolia",
-    links: [
-      { label: "Country guide", href: "/about-mongolia" },
-      { label: "Destinations", href: "/about-mongolia#destinations" },
-      { label: "Culture & history", href: "/blogs?category=culture-history" },
-      { label: "Places to visit", href: "/blogs?category=places-to-visit" },
-      { label: "Things to know", href: "/blogs?category=things-to-know" },
-    ],
-  },
-  {
-    title: "Travel Tools",
-    links: [
-      { label: "Travel blog", href: "/blogs" },
-      { label: "Travel tips", href: "/blogs?category=travel-tips" },
-      { label: "Visa information", href: "/blogs/mongolia-visa-rules-2026" },
-      { label: "Packing guide", href: "/blogs/what-to-pack-for-the-gobi" },
-      { label: "Best time to travel", href: "/blogs/best-time-to-visit-mongolia" },
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      { label: "About us", href: "/about-us" },
-      { label: "Car rental", href: "/car-rental" },
-      { label: "Contact us", href: "/contact" },
-      { label: "Booking inquiry", href: "/contact" },
-    ],
-  },
-];
-
 const SOCIAL_ICONS: Record<string, React.ComponentType<IconProps>> = {
   facebook: FacebookIcon,
   instagram: InstagramIcon,
@@ -112,56 +69,81 @@ const SOCIAL_ICONS: Record<string, React.ComponentType<IconProps>> = {
   x: XIcon,
 };
 
+const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
+  {
+    title: "Tours",
+    links: [
+      { label: "Best seller tours", href: "/tours?category=best-seller" },
+      { label: "Trip calendar", href: "/trip-calendar" },
+      { label: "Join in tours", href: "/tours?type=join" },
+      { label: "Tailor made tours", href: "/tours?type=private" },
+    ],
+  },
+  {
+    title: "About Mongolia",
+    links: [
+      { label: "Practical information", href: "/about-mongolia" },
+      { label: "Destinations", href: "/about-mongolia#destinations" },
+      { label: "Things to do", href: "/blogs?category=places-to-visit" },
+      { label: "Culture & history", href: "/blogs?category=culture-history" },
+    ],
+  },
+  {
+    title: "Blogs",
+    links: [
+      { label: "Travel tips", href: "/blogs?category=travel-tips" },
+      { label: "News", href: "/blogs?category=news-events" },
+      { label: "Places to visit", href: "/blogs?category=places-to-visit" },
+      { label: "Things to know", href: "/blogs?category=things-to-know" },
+    ],
+  },
+  {
+    title: "Travel Tools",
+    links: [
+      { label: "Best time to travel", href: "/blogs/best-time-to-visit-mongolia" },
+      { label: "Visa information", href: "/blogs/mongolia-visa-rules-2026" },
+      { label: "What to pack", href: "/blogs/what-to-pack-for-the-gobi" },
+      { label: "Railway guide", href: "/blogs/trans-mongolian-railway-guide" },
+    ],
+  },
+  {
+    title: "About Us",
+    links: [
+      { label: "Company profile", href: "/about-us" },
+      { label: "Meet the team", href: "/about-us" },
+      { label: "Contact us", href: "/contact" },
+      { label: "Booking inquiry", href: "/contact" },
+    ],
+  },
+  {
+    title: "Car Rental",
+    links: [
+      { label: "Rent with driver", href: "/car-rental" },
+      { label: "Our fleet", href: "/car-rental" },
+    ],
+  },
+];
+
 export default function Footer({ settings }: { settings: Settings }) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-primary-950 text-primary-100">
-      <div className="container-site section !pb-10">
-        <div className="mb-14 flex flex-col items-start justify-between gap-6 rounded-3xl bg-primary-900/50 p-7 ring-1 ring-primary-800/70 lg:flex-row lg:items-center lg:p-9">
-          <div>
-            <h2 className="font-display text-2xl font-semibold text-white">
-              Steppe stories &amp; departure deals
-            </h2>
-            <p className="mt-1 text-sm text-primary-200/80">
-              One email a month — new itineraries, festival dates and honest
-              travel advice. No noise.
-            </p>
-          </div>
-          <NewsletterForm />
+    <footer className="bg-ink text-neutral-300">
+      <div className="container-site pb-8 pt-14">
+        {/* brand row */}
+        <div className="flex flex-col items-center justify-center gap-5 sm:flex-row sm:gap-8">
+          <Link href="/" aria-label="Home">
+            <Logo name={settings.site_name} light />
+          </Link>
+          <span className="hidden h-12 w-px bg-neutral-800 sm:block" aria-hidden />
+          <AwardBadge size={64} />
         </div>
-        <div className="grid gap-10 lg:grid-cols-6">
-          <div className="lg:col-span-2">
-            <Link href="/" aria-label="Home">
-              <Logo name={settings.site_name} light />
-            </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-primary-200/80">
-              {settings.tagline}. Locally owned and operated in Ulaanbaatar
-              since {settings.founded_year}.
-            </p>
-            <ul className="mt-6 space-y-2.5 text-sm">
-              <li className="flex items-start gap-2.5">
-                <MapPin size={16} className="mt-0.5 shrink-0 text-primary-400" />
-                {settings.address}
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Phone size={16} className="shrink-0 text-primary-400" />
-                <a href={`tel:${settings.phone}`} className="hover:text-white">
-                  {settings.phone}
-                </a>
-              </li>
-              <li className="flex items-center gap-2.5">
-                <Mail size={16} className="shrink-0 text-primary-400" />
-                <a href={`mailto:${settings.email}`} className="hover:text-white">
-                  {settings.email}
-                </a>
-              </li>
-            </ul>
-          </div>
 
+        {/* link columns */}
+        <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
           {COLUMNS.map((col) => (
             <div key={col.title}>
-              <h3 className="text-sm font-bold uppercase tracking-wider text-white">
+              <h3 className="text-[13px] font-extrabold uppercase tracking-wider text-white">
                 {col.title}
               </h3>
               <ul className="mt-4 space-y-2.5 text-sm">
@@ -169,7 +151,7 @@ export default function Footer({ settings }: { settings: Settings }) {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-primary-200/80 transition-colors hover:text-white"
+                      className="text-neutral-400 transition-colors hover:text-white"
                     >
                       {link.label}
                     </Link>
@@ -180,29 +162,35 @@ export default function Footer({ settings }: { settings: Settings }) {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-primary-800/60 pt-6 sm:flex-row">
-          <p className="text-xs text-primary-300/70">
-            © {settings.legal_name ?? settings.site_name}{" "}
-            {settings.founded_year} – {year}. All rights reserved.
+        {/* socials */}
+        <div className="mt-12 flex items-center justify-center gap-3">
+          {Object.entries(settings.socials ?? {}).map(([key, url]) => {
+            const Icon = SOCIAL_ICONS[key];
+            if (!Icon) return null;
+            return (
+              <a
+                key={key}
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={key}
+                className="rounded-full border border-neutral-700 p-2.5 text-neutral-300 transition-colors hover:border-white hover:text-white"
+              >
+                <Icon size={15} />
+              </a>
+            );
+          })}
+        </div>
+
+        {/* bottom bar */}
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-neutral-800 pt-6 text-xs text-neutral-500 sm:flex-row">
+          <p>
+            © {settings.legal_name ?? settings.site_name} {settings.founded_year} – {year}.
+            All rights reserved.
           </p>
-          <div className="flex items-center gap-3">
-            {Object.entries(settings.socials ?? {}).map(([key, url]) => {
-              const Icon = SOCIAL_ICONS[key];
-              if (!Icon) return null;
-              return (
-                <a
-                  key={key}
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={key}
-                  className="rounded-full bg-primary-800/60 p-2 text-primary-200 transition-colors hover:bg-primary-500 hover:text-white"
-                >
-                  <Icon size={15} />
-                </a>
-              );
-            })}
-          </div>
+          <p className="flex items-center gap-2">
+            {settings.address}
+          </p>
         </div>
       </div>
     </footer>

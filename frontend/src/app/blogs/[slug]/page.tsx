@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { CalendarDays, Clock3, User } from "lucide-react";
 import { getPost } from "@/lib/api";
 import BlogCard, { formatDate } from "@/components/BlogCard";
+import Breadcrumb from "@/components/Breadcrumb";
 import SectionHeading from "@/components/SectionHeading";
 
 export const dynamic = "force-dynamic";
@@ -39,7 +40,13 @@ export default async function BlogDetailPage({
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary-950/85 via-primary-950/45 to-primary-950/30" />
-          <div className="container-site relative pb-14 pt-24 text-white lg:pb-20 lg:pt-32">
+          <div className="container-site relative pb-14 pt-10 text-white lg:pb-20 lg:pt-14">
+            <div className="mb-6">
+              <Breadcrumb
+                light
+                items={[{ label: "Blogs", href: "/blogs" }, { label: post.title }]}
+              />
+            </div>
             {post.category && (
               <Link
                 href={`/blogs?category=${post.category.slug}`}

@@ -42,7 +42,7 @@ class HomeController extends Controller
             'latest_posts' => Post::where('is_published', true)
                 ->with('category:id,name,slug')
                 ->latest('published_at')
-                ->limit(3)
+                ->limit(5)
                 ->get(),
             'post_categories' => PostCategory::withCount(['posts' => fn ($q) => $q->where('is_published', true)])
                 ->orderBy('sort_order')

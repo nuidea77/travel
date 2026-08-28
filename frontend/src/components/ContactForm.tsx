@@ -98,6 +98,8 @@ export default function ContactForm({ compact = false }: { compact?: boolean }) 
           <>
             <Loader2 size={18} className="animate-spin" /> Sending…
           </>
+        ) : compact ? (
+          "Let's go"
         ) : (
           "Send message"
         )}

@@ -9,19 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Brand red (reference design accent)
         primary: {
-          50: "#effefb",
-          100: "#c8fff4",
-          200: "#92fdea",
-          300: "#53f4dd",
-          400: "#20e0ca",
-          500: "#07c4b1",
-          600: "#029e91",
-          700: "#077d75",
-          800: "#0b635e",
-          900: "#0e524e",
-          950: "#013231",
+          50: "#fdf3f3",
+          100: "#fbe6e6",
+          200: "#f6d0d0",
+          300: "#eeadae",
+          400: "#e17d7f",
+          500: "#cf5254",
+          600: "#b93438",
+          700: "#a02a2e",
+          800: "#832628",
+          900: "#6e2527",
+          950: "#3b0f10",
         },
+        // Warm gold, kept for star ratings and small highlights
         accent: {
           50: "#fffbeb",
           100: "#fef3c7",
@@ -34,15 +36,24 @@ const config: Config = {
           800: "#92400e",
           900: "#78350f",
         },
+        // WhatsApp / award green
+        wa: {
+          500: "#25d366",
+          600: "#1eb457",
+          700: "#00aa6c",
+          800: "#03824f",
+        },
+        // Rose-tinted section background
+        blush: "#f9ecec",
+        ink: "#111111",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "Georgia", "serif"],
+        display: ["var(--font-geist-sans)", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        card: "0 1px 3px rgba(15, 60, 58, 0.08), 0 12px 32px -12px rgba(15, 60, 58, 0.18)",
-        "card-hover": "0 2px 6px rgba(15, 60, 58, 0.1), 0 24px 48px -12px rgba(15, 60, 58, 0.3)",
-        glow: "0 0 0 1px rgba(7, 196, 177, 0.15), 0 8px 40px -8px rgba(7, 196, 177, 0.35)",
+        card: "0 1px 3px rgba(30, 20, 20, 0.07), 0 10px 28px -12px rgba(30, 20, 20, 0.16)",
+        "card-hover": "0 2px 6px rgba(30, 20, 20, 0.09), 0 22px 44px -12px rgba(30, 20, 20, 0.26)",
       },
       keyframes: {
         "float-slow": {

@@ -25,13 +25,16 @@ body {
     @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2;
   }
   .btn-primary {
-    @apply btn bg-primary-600 text-white shadow-md shadow-primary-600/25 hover:bg-primary-700 hover:shadow-lg hover:shadow-primary-600/30;
+    @apply btn bg-primary-700 text-white shadow-md shadow-primary-700/25 hover:bg-primary-800 hover:shadow-lg hover:shadow-primary-700/30;
   }
   .btn-accent {
-    @apply btn bg-accent-500 text-primary-950 shadow-md shadow-accent-500/30 hover:bg-accent-400 hover:shadow-lg hover:shadow-accent-500/40;
+    @apply btn bg-primary-700 text-white shadow-md shadow-primary-700/25 hover:bg-primary-800 hover:shadow-lg hover:shadow-primary-700/30;
+  }
+  .btn-whatsapp {
+    @apply btn bg-wa-500 text-white shadow-md shadow-wa-500/30 hover:bg-wa-600;
   }
   .btn-outline {
-    @apply btn border-2 border-primary-600 text-primary-700 hover:bg-primary-50;
+    @apply btn border border-primary-700 text-primary-700 hover:bg-primary-50;
   }
   .btn-lg {
     @apply px-7 py-3.5 text-base;

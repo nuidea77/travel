@@ -12,7 +12,7 @@ class DepartureController extends Controller
     public function index(Request $request): JsonResponse
     {
         $query = Departure::query()
-            ->with('tour:id,title,slug,image,duration_days,price_from,type')
+            ->with('tour:id,title,slug,image,duration_days,price_from,type,excerpt')
             ->whereHas('tour', fn ($q) => $q->where('is_published', true))
             ->whereDate('start_date', '>=', now())
             ->orderBy('start_date');

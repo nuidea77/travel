@@ -17,11 +17,11 @@ export default function Logo({
         <circle cx="33.5" cy="13.5" r="3.2" fill="#fbbf24" />
       </svg>
       <span className="leading-tight">
-        <span className={`block text-lg font-extrabold tracking-tight ${light ? "text-white" : "text-primary-800"}`}>
+        <span className={`block text-lg font-extrabold uppercase tracking-tight ${light ? "text-white" : "text-primary-700"}`}>
           {name}
         </span>
-        <span className={`block text-[10px] font-semibold uppercase tracking-[0.22em] ${light ? "text-primary-200" : "text-primary-600"}`}>
-          Mongolia Travel
+        <span className={`block text-[11px] italic ${light ? "text-primary-200" : "text-primary-600"}`}>
+          Local Travel Experts…
         </span>
       </span>
     </span>
