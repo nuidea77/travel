@@ -21,7 +21,7 @@ export default function Logo({
           {name}
         </span>
         <span className={`block text-[11px] italic ${light ? "text-primary-200" : "text-primary-600"}`}>
-          Local Travel Experts…
+          Authentic Mongolian Tours
         </span>
       </span>
     </span>
