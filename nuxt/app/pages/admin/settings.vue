@@ -18,7 +18,7 @@ const KNOWN_FIELDS: { key: string; label: string; type?: "textarea" }[] = [
   { key: "founded_year", label: "Founded year" },
 ];
 
-const SOCIAL_KEYS = ["facebook", "instagram", "youtube", "linkedin", "x"];
+const SOCIAL_KEYS = ["instagram", "facebook", "tripadvisor", "youtube", "linkedin", "x"];
 
 const values = reactive<Record<string, string>>({});
 const socials = reactive<Record<string, string>>({});

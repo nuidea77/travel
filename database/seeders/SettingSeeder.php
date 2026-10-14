@@ -21,10 +21,9 @@ class SettingSeeder extends Seeder
             'address' => 'Apt 48A-22, Tokyo Street, 3rd khoroo, Bayanzurkh District, Ulaanbaatar, Mongolia',
             'founded_year' => '2017',
             'socials' => json_encode([
-                'facebook' => 'https://www.facebook.com/nomadictrips/',
                 'instagram' => 'https://www.instagram.com/mmongoliatour/',
-                'youtube' => 'https://youtube.com/',
-                'x' => 'https://x.com/',
+                'facebook' => 'https://www.facebook.com/nomadictrips/',
+                'tripadvisor' => 'https://www.tripadvisor.com/Attraction_Review-g293956-d13526295-Reviews-Magnificent_Mongolia_Tour-Ulaanbaatar.html',
             ]),
             'stats' => json_encode([
                 ['label' => 'Guiding travelers since', 'value' => '2017'],
