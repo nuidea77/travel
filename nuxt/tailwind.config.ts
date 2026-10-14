@@ -11,19 +11,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Brand red (reference design accent)
+        // Brand blue, anchored to the logo: 400 = circle (#78ceff),
+        // 600 = bright wolf stripe, 900 = wolf navy
         primary: {
-          50: "#fdf3f3",
-          100: "#fbe6e6",
-          200: "#f6d0d0",
-          300: "#eeadae",
-          400: "#e17d7f",
-          500: "#cf5254",
-          600: "#b93438",
-          700: "#a02a2e",
-          800: "#832628",
-          900: "#6e2527",
-          950: "#3b0f10",
+          50: "#f0f8ff",
+          100: "#e1f2fe",
+          200: "#c3e6fe",
+          300: "#9ddaff",
+          400: "#78ceff",
+          500: "#3fb3f6",
+          600: "#08a1ee",
+          700: "#0e6cab",
+          800: "#115685",
+          900: "#14436b",
+          950: "#0c2a44",
         },
         // Warm gold, kept for star ratings and small highlights
         accent: {
@@ -45,8 +46,8 @@ const config: Config = {
           700: "#00aa6c",
           800: "#03824f",
         },
-        // Rose-tinted section background
-        blush: "#f9ecec",
+        // Sky-tinted section background
+        blush: "#e8f3fb",
         ink: "#111111",
       },
       fontFamily: {
@@ -54,8 +55,8 @@ const config: Config = {
         display: ["Geist", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        card: "0 1px 3px rgba(30, 20, 20, 0.07), 0 10px 28px -12px rgba(30, 20, 20, 0.16)",
-        "card-hover": "0 2px 6px rgba(30, 20, 20, 0.09), 0 22px 44px -12px rgba(30, 20, 20, 0.26)",
+        card: "0 1px 3px rgba(12, 42, 68, 0.07), 0 10px 28px -12px rgba(12, 42, 68, 0.16)",
+        "card-hover": "0 2px 6px rgba(12, 42, 68, 0.09), 0 22px 44px -12px rgba(12, 42, 68, 0.26)",
       },
       keyframes: {
         "float-slow": {

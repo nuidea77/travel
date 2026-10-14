@@ -11,7 +11,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #16302e;
+  --foreground: #122c42;
 }
 
 html {
@@ -32,10 +32,11 @@ body {
     @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2;
   }
   .btn-primary {
-    @apply btn bg-primary-700 text-white shadow-md shadow-primary-700/25 hover:bg-primary-800 hover:shadow-lg hover:shadow-primary-700/30;
+    /* the signature brand color — light sky blue, so text stays dark */
+    @apply btn bg-primary-400 text-ink shadow-md shadow-primary-400/40 hover:bg-primary-500 hover:shadow-lg hover:shadow-primary-400/50;
   }
   .btn-accent {
-    @apply btn bg-primary-700 text-white shadow-md shadow-primary-700/25 hover:bg-primary-800 hover:shadow-lg hover:shadow-primary-700/30;
+    @apply btn bg-primary-900 text-white shadow-md shadow-primary-900/25 hover:bg-primary-800 hover:shadow-lg hover:shadow-primary-900/30;
   }
   .btn-whatsapp {
     @apply btn bg-wa-500 text-white shadow-md shadow-wa-500/30 hover:bg-wa-600;
