@@ -45,18 +45,24 @@ settings, and inboxes for bookings and contact messages.
 
 ## Quick start
 
-Requirements: PHP ≥ 8.3, Composer, Node ≥ 20.
+Requirements: PHP ≥ 8.3, Composer, Node ≥ 20, MySQL 8+ (or MariaDB 10.6+).
 
 ### 1. Backend (Laravel API + admin)
 
 ```bash
 composer install
-cp .env.example .env         # SQLite is the default connection
+cp .env.example .env         # MySQL is the default connection
 php artisan key:generate
-touch database/database.sqlite
+
+# create the database, then set DB_DATABASE / DB_USERNAME / DB_PASSWORD in .env
+mysql -u root -e "CREATE DATABASE mmongolia CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
 php artisan migrate --seed   # seeds 33 tours, blogs, reviews, pages, settings
 php artisan serve            # http://localhost:8000
 ```
+
+> Prefer a zero-setup database? Set `DB_CONNECTION=sqlite` in `.env` and run
+> `touch database/database.sqlite` instead of creating a MySQL database.
 
 The admin panel lives in the Nuxt app: <http://localhost:3000/admin> —
 login `admin@example.com` / `password` (change it after first login).
@@ -76,8 +82,9 @@ For production: `npm run build && node .output/server/index.mjs`
 ### Түргэн эхлүүлэх (Монгол)
 
 1. Root дотор: `composer install`, `cp .env.example .env`,
-   `php artisan key:generate`, `touch database/database.sqlite`,
-   `php artisan migrate --seed`, дараа нь `php artisan serve`.
+   `php artisan key:generate`. MySQL-д `mmongolia` нэртэй сан үүсгээд
+   `.env`-ийн `DB_DATABASE / DB_USERNAME / DB_PASSWORD`-оо тохируулна.
+   Дараа нь `php artisan migrate --seed`, тэгээд `php artisan serve`.
 2. `nuxt/` дотор: `npm install`, `cp .env.example .env`, `npm run dev`.
 3. Сайт: <http://localhost:3000> · Админ: <http://localhost:3000/admin>
    (`admin@example.com` / `password`).
@@ -105,6 +112,9 @@ For production: `npm run build && node .output/server/index.mjs`
   appear on the next page load — no rebuilds needed. If the API is
   unreachable, pages degrade to empty states instead of crashing (useful
   during `npm run build`).
+- The database is MySQL (utf8mb4); every content table is plain Laravel
+  migrations, so MariaDB 10.6+ works identically, and SQLite remains usable
+  for quick local experiments (`DB_CONNECTION=sqlite`).
 - CORS for `/api/*` is open by default via Laravel's framework defaults;
   restrict `allowed_origins` before production.
 - Bookings and contact messages are stored via the API and triaged in the
