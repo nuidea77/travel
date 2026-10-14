@@ -14,6 +14,8 @@ export interface Destination {
   region: string | null;
   description: string | null;
   image: string | null;
+  lat?: string | number | null;
+  lng?: string | number | null;
   tours_count?: number;
 }
 
@@ -25,6 +27,9 @@ export interface ItineraryDay {
   meals: string | null;
   accommodation: string | null;
   distance: string | null;
+  map_label?: string | null;
+  lat?: string | number | null;
+  lng?: string | number | null;
 }
 
 export interface TourPrice {

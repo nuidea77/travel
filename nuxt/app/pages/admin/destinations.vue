@@ -12,7 +12,7 @@ const imageOptions = computed(() =>
   })),
 );
 
-const REGIONS = ["South", "Central", "North", "West", "East", "Capital"].map((r) => ({
+const REGIONS = ["South", "Central", "North", "West", "East"].map((r) => ({
   value: r,
   label: r,
 }));
@@ -33,6 +33,8 @@ const REGIONS = ["South", "Central", "North", "West", "East", "Capital"].map((r)
       { key: 'slug', label: 'Slug', type: 'text', required: true },
       { key: 'region', label: 'Region', type: 'select', options: REGIONS, default: 'Central' },
       { key: 'image', label: 'Image', type: 'image', options: imageOptions, default: '/images/hero-steppe.svg' },
+      { key: 'lat', label: 'Latitude (map)', type: 'number' },
+      { key: 'lng', label: 'Longitude (map)', type: 'number' },
       { key: 'sort_order', label: 'Sort order', type: 'number', default: 0 },
       { key: 'description', label: 'Description', type: 'textarea', rows: 2 },
     ]"

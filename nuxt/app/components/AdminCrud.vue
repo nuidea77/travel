@@ -64,7 +64,11 @@ async function save() {
   saving.value = true;
   error.value = null;
   const payload: Record<string, unknown> = {};
-  for (const field of props.fields) payload[field.key] = editing.value[field.key];
+  for (const field of props.fields) {
+    const value = editing.value[field.key];
+    // empty inputs on optional fields go up as null (e.g. numeric lat/lng)
+    payload[field.key] = value === "" && !field.required ? null : value;
+  }
   try {
     if (editing.value.id) {
       await adminFetch(`${props.endpoint}/${editing.value.id}`, { method: "PUT", body: payload });

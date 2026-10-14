@@ -60,6 +60,9 @@ class TourSeeder extends Seeder
                     'description' => $day['description'],
                     'meals' => $day['meals'],
                     'distance' => $day['distance'],
+                    'map_label' => $day['map_label'] ?? null,
+                    'lat' => $day['lat'] ?? null,
+                    'lng' => $day['lng'] ?? null,
                 ]);
             }
 

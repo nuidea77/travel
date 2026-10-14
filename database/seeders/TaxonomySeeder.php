@@ -46,6 +46,8 @@ class TaxonomySeeder extends Seeder
                 'region' => $dest['region'],
                 'description' => $dest['description'] ?: null,
                 'image' => $dest['image'],
+                'lat' => $dest['lat'] ?? null,
+                'lng' => $dest['lng'] ?? null,
                 'sort_order' => $i,
             ]);
         }

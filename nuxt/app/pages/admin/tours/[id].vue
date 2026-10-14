@@ -19,7 +19,17 @@ type MetaOptions = {
 
 const { data: meta } = await useAsyncData("admin-meta-options", () => adminFetch<MetaOptions>("/meta"));
 
-type Day = { day_number: number; title: string; description: string; meals: string; accommodation: string; distance: string };
+type Day = {
+  day_number: number;
+  title: string;
+  description: string;
+  meals: string;
+  accommodation: string;
+  distance: string;
+  map_label: string;
+  lat: string | number | null;
+  lng: string | number | null;
+};
 type Price = { min_people: number; max_people: number; price: number };
 type Departure = { start_date: string; end_date: string; price: number | null; seats_total: number; seats_left: number; status: string };
 type GoodToKnow = { title: string; body: string };
@@ -80,6 +90,9 @@ if (!isNew.value) {
       meals: d.meals ?? "",
       accommodation: d.accommodation ?? "",
       distance: d.distance ?? "",
+      map_label: d.map_label ?? "",
+      lat: d.lat ?? null,
+      lng: d.lng ?? null,
     })),
     prices: (tour.prices ?? []).map((p) => ({
       min_people: p.min_people,
@@ -141,7 +154,13 @@ async function save() {
     good_to_know: form.good_to_know,
     categories: form.categories,
     destinations: form.destinations,
-    itinerary_days: form.itinerary_days.map((d, i) => ({ ...d, day_number: i + 1 })),
+    itinerary_days: form.itinerary_days.map((d, i) => ({
+      ...d,
+      day_number: i + 1,
+      map_label: d.map_label || null,
+      lat: d.lat === "" || d.lat === null ? null : Number(d.lat),
+      lng: d.lng === "" || d.lng === null ? null : Number(d.lng),
+    })),
     prices: form.prices,
     departures: form.departures,
   };
@@ -169,8 +188,26 @@ function addDay() {
     meals: "B+L+D",
     accommodation: "Ger camp / family ger",
     distance: "",
+    map_label: "",
+    lat: null,
+    lng: null,
   });
 }
+
+const mappedDays = computed(
+  () => form.itinerary_days.filter((d) => d.lat && d.lng).length,
+);
+
+// live data for the route-map preview below the itinerary editor
+const previewStops = computed(() =>
+  form.itinerary_days.map((d, i) => ({
+    day_number: i + 1,
+    title: d.title,
+    map_label: d.map_label,
+    lat: d.lat,
+    lng: d.lng,
+  })),
+);
 </script>
 
 <template>
@@ -280,8 +317,21 @@ function addDay() {
                 <input v-model="day.accommodation" placeholder="Accommodation" class="adm-input" />
                 <input v-model="day.distance" placeholder="Distance" class="adm-input" />
               </div>
+              <div class="grid gap-2 sm:grid-cols-3">
+                <input v-model="day.map_label" placeholder="Map label (short place name)" class="adm-input" />
+                <input v-model="day.lat" type="number" step="any" placeholder="Latitude (e.g. 46.79)" class="adm-input" />
+                <input v-model="day.lng" type="number" step="any" placeholder="Longitude (e.g. 101.96)" class="adm-input" />
+              </div>
             </div>
           </div>
+
+          <div v-if="mappedDays >= 2" class="mt-4">
+            <p class="adm-label">Route map preview (from the coordinates above)</p>
+            <TourRouteMap :stops="previewStops" />
+          </div>
+          <p v-else class="mt-3 text-xs text-slate-400">
+            Add latitude/longitude to at least two days to get the route map on the tour page.
+          </p>
         </section>
 
         <!-- prices & departures -->

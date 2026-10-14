@@ -36,18 +36,24 @@ const departures = computed(() => tour.value?.departures ?? []);
 
 const GOOD_TO_KNOW_ICONS = [Sun, BedDouble, UtensilsCrossed, Bus, ShieldCheck];
 
+const hasMap = computed(
+  () => (tour.value?.itinerary_days ?? []).filter((d) => d.lat && d.lng).length >= 2,
+);
+
 const tabs = computed(() =>
   [
     ["#overview", "Overview"],
     ["#itinerary", "Itinerary"],
+    ["#map", "Tour map"],
     ["#price-date", "Price & Date"],
     ["#included", "What's included"],
     ["#good-to-know", "Good to know"],
     ["#reviews", "Reviews"],
   ].filter(
     ([href]) =>
-      href !== "#reviews" ||
-      (tour.value?.testimonials && tour.value.testimonials.length > 0),
+      (href !== "#reviews" ||
+        (tour.value?.testimonials && tour.value.testimonials.length > 0)) &&
+      (href !== "#map" || hasMap.value),
   ),
 );
 
@@ -141,6 +147,15 @@ function formatRange(start: string, end: string) {
             Day by day tour plan with highlights, distances and activities.
           </p>
           <ItineraryAccordion :days="tour.itinerary_days" />
+        </section>
+
+        <!-- route map -->
+        <section v-if="hasMap" id="map" class="mt-12 scroll-mt-32">
+          <h2 class="text-2xl font-extrabold text-slate-900">Tour map</h2>
+          <p class="mb-5 mt-1 text-sm text-slate-500">
+            The day-by-day route of this trip across Mongolia.
+          </p>
+          <TourRouteMap :stops="tour.itinerary_days ?? []" />
         </section>
 
         <!-- price & date -->

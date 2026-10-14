@@ -17,6 +17,8 @@ class DestinationAdminController extends SimpleCrudController
             'region' => ['nullable', 'string', 'max:60'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'string', 'max:190'],
+            'lat' => ['nullable', 'numeric', 'between:-90,90'],
+            'lng' => ['nullable', 'numeric', 'between:-180,180'],
             'sort_order' => ['integer'],
         ];
     }

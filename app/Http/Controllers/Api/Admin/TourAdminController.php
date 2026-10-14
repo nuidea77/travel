@@ -91,10 +91,13 @@ class TourAdminController extends Controller
             'itinerary_days' => ['array'],
             'itinerary_days.*.day_number' => ['required', 'integer', 'min:1'],
             'itinerary_days.*.title' => ['required', 'string'],
-            'itinerary_days.*.description' => ['required', 'string'],
+            'itinerary_days.*.description' => ['nullable', 'string'],
             'itinerary_days.*.meals' => ['nullable', 'string'],
             'itinerary_days.*.accommodation' => ['nullable', 'string'],
             'itinerary_days.*.distance' => ['nullable', 'string'],
+            'itinerary_days.*.map_label' => ['nullable', 'string', 'max:120'],
+            'itinerary_days.*.lat' => ['nullable', 'numeric', 'between:-90,90'],
+            'itinerary_days.*.lng' => ['nullable', 'numeric', 'between:-180,180'],
             'prices' => ['array'],
             'prices.*.min_people' => ['required', 'integer', 'min:1'],
             'prices.*.max_people' => ['required', 'integer', 'min:1'],
@@ -131,7 +134,11 @@ class TourAdminController extends Controller
         }
         if (is_array($data['itinerary_days'])) {
             $tour->itineraryDays()->delete();
-            $tour->itineraryDays()->createMany($data['itinerary_days']);
+            $tour->itineraryDays()->createMany(array_map(function (array $day) {
+                $day['description'] = $day['description'] ?? '';
+
+                return $day;
+            }, $data['itinerary_days']));
         }
         if (is_array($data['prices'])) {
             $tour->prices()->delete();
