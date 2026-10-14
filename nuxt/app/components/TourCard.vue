@@ -66,7 +66,8 @@ const slices = [
         <p class="pt-0.5 text-[13px] font-semibold text-slate-700">
           {{ tour.duration_days }} {{ tour.duration_days === 1 ? "day" : "days" }}
           <span class="mx-1.5 text-slate-300">·</span>
-          from {{ Number(tour.price_from).toLocaleString() }} USD
+          <template v-if="Number(tour.price_from) > 0">from {{ Number(tour.price_from).toLocaleString() }} USD</template>
+          <template v-else>price on request</template>
         </p>
         <NuxtLink
           :to="`/tours/${tour.slug}`"

@@ -5,19 +5,25 @@ namespace App\Support;
 class SiteImages
 {
     /**
-     * Illustration set shipped with the Nuxt frontend (nuxt/public/images).
-     * Stored as absolute web paths so the frontend can render them directly.
+     * Images shipped with the Nuxt frontend (nuxt/public/images), as
+     * absolute web paths the frontend can render directly. Scans the
+     * directory so imported tour/destination photos show up in the
+     * admin image pickers automatically.
      */
     public static function options(): array
     {
-        $files = [
-            'hero-steppe', 'gobi-dunes', 'lake-khuvsgul', 'altai-peaks',
-            'naadam-festival', 'horse-trek', 'terelj-park', 'kharkhorin',
-            'eagle-hunter', 'moto-adventure', 'nomad-life', 'winter-tour',
-            'khustai-horses', 'ulaanbaatar', 'volcano-terkh', 'trans-mongolian',
-            'fishing-rafting',
-        ];
+        $root = base_path('nuxt/public/images');
+        if (! is_dir($root)) {
+            return [];
+        }
 
-        return array_map(fn (string $name) => "/images/{$name}.svg", $files);
+        $paths = [];
+        foreach (['', 'tours/', 'destinations/'] as $dir) {
+            foreach (glob($root.'/'.$dir.'*.{svg,jpg,jpeg,png,webp}', GLOB_BRACE) ?: [] as $file) {
+                $paths[] = '/images/'.$dir.basename($file);
+            }
+        }
+
+        return $paths;
     }
 }

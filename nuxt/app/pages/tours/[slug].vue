@@ -90,7 +90,7 @@ function formatRange(start: string, end: string) {
             <Clock :size="15" class="text-accent-400" />
             {{ tour.duration_days }} {{ tour.duration_days === 1 ? "day" : "days" }}
           </span>
-          <span class="flex items-center gap-1.5">
+          <span v-if="tour.reviews_count > 0" class="flex items-center gap-1.5">
             <Star :size="15" class="fill-accent-400 text-accent-400" />
             {{ Number(tour.rating).toFixed(1) }} · {{ tour.reviews_count }} reviews
           </span>
@@ -276,11 +276,17 @@ function formatRange(start: string, end: string) {
       <aside class="lg:sticky lg:top-32 lg:self-start">
         <div class="overflow-hidden rounded-xl border border-slate-200 shadow-card">
           <div class="bg-blush px-6 py-5">
-            <p class="text-xs font-bold uppercase tracking-wide text-slate-500">From</p>
-            <p class="text-3xl font-extrabold text-primary-700">
-              {{ Number(tour.price_from).toLocaleString() }} USD
-              <span class="text-sm font-semibold text-slate-500"> /person</span>
-            </p>
+            <template v-if="Number(tour.price_from) > 0">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500">From</p>
+              <p class="text-3xl font-extrabold text-primary-700">
+                {{ Number(tour.price_from).toLocaleString() }} USD
+                <span class="text-sm font-semibold text-slate-500"> /person</span>
+              </p>
+            </template>
+            <template v-else>
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500">Private tour</p>
+              <p class="text-2xl font-extrabold text-primary-700">Price on request</p>
+            </template>
           </div>
           <div class="space-y-2.5 p-6">
             <a href="#book" class="btn-primary btn-md w-full">Book now</a>
