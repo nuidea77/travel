@@ -15,6 +15,8 @@ export const DEFAULT_SETTINGS: Settings = {
   site_name: "Magnificent Mongolia",
   tagline: "Authentic Mongolian tours across all five regions of the country",
   logo_tagline: "Authentic Mongolian Tours",
+  hero_title: "Explore The Majestic Mongolia Landscape Now",
+  hero_image: "/images/hero.jpg",
   phone: "+976 9991-9363",
   whatsapp: "+976 9991-9363",
   email: "info@mmongolia.com",

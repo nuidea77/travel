@@ -23,7 +23,7 @@ const items = computed(() => [
     <PageHero
       title="Contact us"
       subtitle="Real humans in Ulaanbaatar — tell us your dates, dreams and questions."
-      image="/images/ulaanbaatar.svg"
+      image="/images/hero.jpg"
       breadcrumb="Contact"
     />
     <section class="section !pt-12">

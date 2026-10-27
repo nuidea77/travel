@@ -1,19 +1,55 @@
 <script setup lang="ts">
-import { Mail, Menu, MessageCircle, Phone, X } from "lucide-vue-next";
+import { ChevronDown, Mail, Menu, MessageCircle, Phone, X } from "lucide-vue-next";
 
 const settings = useSettings();
 const route = useRoute();
 const open = ref(false);
+const scrolled = ref(false);
 
 type NavGroup = { label: string; href: string; children?: { label: string; href: string }[] };
 
 const NAV: NavGroup[] = [
+  { label: "Home", href: "/" },
   {
     label: "Tours",
     href: "/tours",
     children: [
       { label: "All tours", href: "/tours" },
-      { label: "Best seller tours", href: "/tours?category=discovery" },
+      { label: "Join in tours", href: "/tours?type=join" },
+      { label: "Tailor made tours", href: "/tours?type=private" },
+      { label: "Trip calendar", href: "/trip-calendar" },
+    ],
+  },
+  { label: "Destinations", href: "/about-mongolia#destinations" },
+  {
+    label: "Blog",
+    href: "/blogs",
+    children: [
+      { label: "All articles", href: "/blogs" },
+      { label: "Travel tips", href: "/blogs?category=travel-tips" },
+      { label: "Places to visit", href: "/blogs?category=places-to-visit" },
+      { label: "Festivals & events", href: "/blogs?category=news-events" },
+    ],
+  },
+  {
+    label: "About",
+    href: "/about-us",
+    children: [
+      { label: "About us", href: "/about-us" },
+      { label: "About Mongolia", href: "/about-mongolia" },
+      { label: "Car rental", href: "/car-rental" },
+    ],
+  },
+  { label: "Contact", href: "/contact" },
+];
+
+// the drawer keeps the fuller sitemap for mobile
+const DRAWER_NAV: NavGroup[] = [
+  {
+    label: "Tours",
+    href: "/tours",
+    children: [
+      { label: "All tours", href: "/tours" },
       { label: "Join in tours", href: "/tours?type=join" },
       { label: "Tailor made tours", href: "/tours?type=private" },
       { label: "Trip calendar", href: "/trip-calendar" },
@@ -49,6 +85,22 @@ const waLink = computed(
   () => `https://wa.me/${settings.value.whatsapp.replace(/[^\d]/g, "")}`,
 );
 
+function isActive(item: NavGroup) {
+  if (item.href === "/") return route.path === "/";
+  const base = item.href.split(/[?#]/)[0]!;
+  return route.path === base || route.path.startsWith(base + "/");
+}
+
+function onScroll() {
+  scrolled.value = window.scrollY > 24;
+}
+
+onMounted(() => {
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+});
+onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
+
 watch(
   () => route.fullPath,
   () => {
@@ -64,28 +116,77 @@ watch(open, (value) => {
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 border-b border-slate-100 bg-white">
-    <div class="container-site grid grid-cols-[1fr_auto_1fr] items-center py-2.5">
-      <button
-        class="flex w-fit items-center gap-2 rounded-lg px-2 py-2 text-sm font-bold uppercase tracking-wide text-slate-800 transition-colors hover:bg-slate-100"
-        aria-label="Open menu"
-        :aria-expanded="open"
-        @click="open = true"
-      >
-        <Menu :size="20" />
-        <span class="hidden sm:inline">Menu</span>
-      </button>
-
-      <NuxtLink to="/" aria-label="Home" class="justify-self-center">
-        <SiteLogo :name="settings.site_name" :tagline="settings.logo_tagline" />
+  <header
+    class="fixed inset-x-0 top-0 z-50 transition-all duration-300"
+    :class="scrolled ? 'border-b border-slate-100 bg-white/95 shadow-sm backdrop-blur' : 'bg-transparent'"
+  >
+    <div class="container-site flex items-center justify-between gap-4 py-3">
+      <NuxtLink to="/" aria-label="Home" class="shrink-0">
+        <SiteLogo :name="settings.site_name" :tagline="settings.logo_tagline" :light="!scrolled" />
       </NuxtLink>
 
-      <div class="flex items-center justify-end">
-        <a :href="waLink" target="_blank" rel="noreferrer" class="btn-whatsapp btn-sm sm:btn-md !gap-2">
-          <MessageCircle :size="16" />
-          <span class="hidden md:inline">Chat with us on WhatsApp</span>
-          <span class="md:hidden">WhatsApp</span>
+      <!-- centered pill nav -->
+      <nav
+        class="hidden items-center rounded-full border p-1.5 backdrop-blur-md transition-colors lg:flex"
+        :class="scrolled ? 'border-slate-200 bg-white' : 'border-white/20 bg-white/10'"
+        aria-label="Main"
+      >
+        <div v-for="item in NAV" :key="item.label" class="group relative">
+          <NuxtLink
+            :to="item.href"
+            class="flex items-center gap-1 rounded-full px-4 py-2 text-[12.5px] font-bold uppercase tracking-wider transition-colors"
+            :class="
+              isActive(item)
+                ? scrolled
+                  ? 'bg-ink text-white'
+                  : 'bg-white text-ink'
+                : scrolled
+                  ? 'text-slate-700 hover:bg-slate-100'
+                  : 'text-white/90 hover:bg-white/15'
+            "
+          >
+            {{ item.label }}
+            <ChevronDown v-if="item.children" :size="13" class="opacity-70" />
+          </NuxtLink>
+
+          <div
+            v-if="item.children"
+            class="invisible absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100"
+          >
+            <div class="overflow-hidden rounded-2xl border border-slate-100 bg-white py-2 shadow-card-hover">
+              <NuxtLink
+                v-for="child in item.children"
+                :key="child.label"
+                :to="child.href"
+                class="block px-5 py-2.5 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-50 hover:text-ink"
+              >
+                {{ child.label }}
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <div class="flex shrink-0 items-center gap-2.5">
+        <a
+          :href="waLink"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Chat on WhatsApp"
+          class="hidden h-11 w-11 items-center justify-center rounded-full border transition-colors sm:flex"
+          :class="scrolled ? 'border-slate-200 text-wa-600 hover:bg-wa-500 hover:text-white' : 'border-white/30 text-white hover:bg-white hover:text-wa-600'"
+        >
+          <MessageCircle :size="18" />
         </a>
+        <button
+          class="flex h-11 w-11 items-center justify-center rounded-full border transition-colors"
+          :class="scrolled ? 'border-slate-200 text-slate-800 hover:bg-slate-100' : 'border-white/30 text-white hover:bg-white/15'"
+          aria-label="Open menu"
+          :aria-expanded="open"
+          @click="open = true"
+        >
+          <Menu :size="19" />
+        </button>
       </div>
     </div>
 
@@ -105,7 +206,7 @@ watch(open, (value) => {
         </div>
 
         <nav class="flex-1 px-6 py-5" aria-label="Main">
-          <div v-for="group in NAV" :key="group.label" class="border-b border-slate-100 py-3 last:border-0">
+          <div v-for="group in DRAWER_NAV" :key="group.label" class="border-b border-slate-100 py-3 last:border-0">
             <NuxtLink
               :to="group.href"
               class="block text-[15px] font-extrabold uppercase tracking-wide text-slate-900 transition-colors hover:text-primary-700"

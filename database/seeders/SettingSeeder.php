@@ -14,6 +14,8 @@ class SettingSeeder extends Seeder
             'legal_name' => 'Magnificent Mongolia Tour LLC',
             'tagline' => 'Authentic Mongolian tours across all five regions of the country',
             'logo_tagline' => 'Authentic Mongolian Tours',
+            'hero_title' => 'Explore The Majestic Mongolia Landscape Now',
+            'hero_image' => '/images/hero.jpg',
             'phone' => '+976 9991-9363',
             'phone2' => '+976 8961-9363',
             'whatsapp' => '+976 9991-9363',

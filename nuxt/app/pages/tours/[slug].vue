@@ -77,7 +77,7 @@ function formatRange(start: string, end: string) {
         class="absolute inset-0 h-full w-full object-cover opacity-90"
       />
       <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/40" />
-      <div class="container-site relative pb-12 pt-10 text-white lg:pb-16 lg:pt-14">
+      <div class="container-site relative pb-12 pt-28 text-white lg:pb-16 lg:pt-36">
         <Breadcrumb light :items="[{ label: 'Tours', href: '/tours' }, { label: tour.title }]" />
         <div class="mt-6 flex flex-wrap items-center gap-2">
           <span class="rounded-md bg-white px-2.5 py-1 text-[11px] font-bold text-slate-800">
@@ -109,7 +109,7 @@ function formatRange(start: string, end: string) {
     </section>
 
     <!-- tab nav -->
-    <nav aria-label="Tour sections" class="sticky top-[61px] z-30 border-b border-slate-200 bg-white">
+    <nav aria-label="Tour sections" class="sticky top-[72px] z-30 border-b border-slate-200 bg-white">
       <div class="container-site no-scrollbar flex items-center gap-6 overflow-x-auto">
         <a
           v-for="[href, label] in tabs"

@@ -10,6 +10,8 @@ const KNOWN_FIELDS: { key: string; label: string; type?: "textarea" }[] = [
   { key: "legal_name", label: "Legal name" },
   { key: "tagline", label: "Tagline", type: "textarea" },
   { key: "logo_tagline", label: "Logo tagline" },
+  { key: "hero_title", label: "Homepage hero title" },
+  { key: "hero_image", label: "Homepage hero image (path)" },
   { key: "phone", label: "Phone" },
   { key: "phone2", label: "Phone 2" },
   { key: "whatsapp", label: "WhatsApp" },

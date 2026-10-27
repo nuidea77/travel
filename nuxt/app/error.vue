@@ -10,7 +10,7 @@ defineProps<{ error: NuxtError }>();
     <section class="relative isolate overflow-hidden bg-ink">
       <img src="/images/gobi-dunes.svg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
       <div class="absolute inset-0 bg-black/60" />
-      <div class="container-site relative flex min-h-[60vh] flex-col items-center justify-center py-24 text-center text-white">
+      <div class="container-site relative flex min-h-[70vh] flex-col items-center justify-center pb-24 pt-36 text-center text-white">
         <p class="text-7xl font-extrabold text-accent-400">{{ error.statusCode }}</p>
         <h1 class="mt-3 text-2xl font-extrabold lg:text-3xl">
           {{ error.statusCode === 404 ? "You've wandered off the trail" : "Something went wrong" }}

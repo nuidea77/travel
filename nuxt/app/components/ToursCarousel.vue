@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 
-defineProps<{ heading: string; lead?: string }>();
+defineProps<{ heading: string; lead?: string; label?: string }>();
 
 const track = ref<HTMLElement | null>(null);
 const canPrev = ref(false);
@@ -31,14 +31,15 @@ onMounted(() => {
   <div>
     <div class="mb-8 flex items-end justify-between gap-6">
       <div>
-        <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 lg:text-4xl">
+        <p v-if="label" class="text-xs font-bold uppercase tracking-[0.25em] text-slate-400">{{ label }}</p>
+        <h2 class="mt-2 text-3xl font-extrabold tracking-tight text-slate-900 lg:text-5xl">
           {{ heading }}
         </h2>
         <p v-if="lead" class="mt-2 text-slate-500">{{ lead }}</p>
       </div>
       <div class="hidden shrink-0 gap-2.5 sm:flex">
         <button
-          class="rounded-full border border-slate-300 p-2.5 text-slate-700 transition-all hover:border-primary-700 hover:text-primary-700 disabled:border-slate-200 disabled:text-slate-300"
+          class="rounded-full border border-slate-300 p-2.5 text-slate-700 transition-all hover:border-ink hover:bg-ink hover:text-white disabled:border-slate-200 disabled:bg-transparent disabled:text-slate-300"
           :disabled="!canPrev"
           aria-label="Previous"
           @click="scrollBy(-1)"
@@ -46,7 +47,7 @@ onMounted(() => {
           <ChevronLeft :size="18" />
         </button>
         <button
-          class="rounded-full border border-slate-300 p-2.5 text-slate-700 transition-all hover:border-primary-700 hover:text-primary-700 disabled:border-slate-200 disabled:text-slate-300"
+          class="rounded-full border border-slate-300 p-2.5 text-slate-700 transition-all hover:border-ink hover:bg-ink hover:text-white disabled:border-slate-200 disabled:bg-transparent disabled:text-slate-300"
           :disabled="!canNext"
           aria-label="Next"
           @click="scrollBy(1)"

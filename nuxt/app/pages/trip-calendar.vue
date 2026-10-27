@@ -42,9 +42,9 @@ const seasonYear = computed(() => {
 <template>
   <div>
     <section class="relative isolate overflow-hidden bg-ink">
-      <img src="/images/gobi-dunes.svg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+      <img src="/images/tours/horseback-adventure-tour.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/65" />
-      <div class="container-site relative py-16 text-white lg:py-24">
+      <div class="container-site relative pb-16 pt-32 text-white lg:pb-24 lg:pt-44">
         <Breadcrumb light :items="[{ label: 'Trip Calendar' }]" />
         <h1 class="mt-6 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Welcome to Trip Calendar {{ seasonYear }}!
@@ -59,7 +59,7 @@ const seasonYear = computed(() => {
     </section>
 
     <!-- month tabs -->
-    <nav v-if="months.length > 0" aria-label="Months" class="sticky top-[61px] z-30 border-b border-slate-200 bg-white">
+    <nav v-if="months.length > 0" aria-label="Months" class="sticky top-[72px] z-30 border-b border-slate-200 bg-white">
       <div class="container-site no-scrollbar flex gap-6 overflow-x-auto">
         <a
           v-for="month in months"

@@ -32,9 +32,9 @@ const { data: filters } = await useAsyncData("tour-filters", () => getTourFilter
 <template>
   <div>
     <section class="relative isolate overflow-hidden bg-ink">
-      <img src="/images/hero-steppe.svg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+      <img src="/images/destinations/khongor-sand-dunes.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 to-black/60" />
-      <div class="container-site relative py-16 text-white lg:py-24">
+      <div class="container-site relative pb-16 pt-32 text-white lg:pb-24 lg:pt-44">
         <Breadcrumb light :items="[{ label: 'Tours' }]" />
         <div class="mt-6 flex items-end justify-between gap-8">
           <div class="max-w-2xl">

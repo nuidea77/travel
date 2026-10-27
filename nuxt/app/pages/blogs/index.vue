@@ -42,11 +42,13 @@ const rest = computed(() =>
 
 <template>
   <div>
-    <section class="border-b border-slate-100 bg-white">
-      <div class="container-site py-10 lg:py-14">
-        <Breadcrumb :items="[{ label: 'Blogs' }]" />
-        <h1 class="mt-5 text-4xl font-extrabold tracking-tight text-slate-900 lg:text-5xl">Blogs</h1>
-        <p class="mt-3 text-slate-500">It is a land where you can experience wide-open spaces.</p>
+    <section class="relative isolate overflow-hidden bg-ink">
+      <img src="/images/destinations/khuvsgul-lake.jpg" alt="" class="absolute inset-0 h-full w-full object-cover opacity-90" aria-hidden="true" />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/30 to-black/60" />
+      <div class="container-site relative pb-16 pt-32 text-white lg:pb-20 lg:pt-44">
+        <Breadcrumb light :items="[{ label: 'Blogs' }]" />
+        <h1 class="mt-5 text-4xl font-extrabold tracking-tight lg:text-5xl">Blogs</h1>
+        <p class="mt-3 text-white/85">It is a land where you can experience wide-open spaces.</p>
       </div>
     </section>
 

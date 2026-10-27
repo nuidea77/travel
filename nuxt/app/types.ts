@@ -125,6 +125,8 @@ export interface Settings {
   legal_name?: string;
   tagline: string;
   logo_tagline?: string;
+  hero_title?: string;
+  hero_image?: string;
   phone: string;
   phone2?: string;
   whatsapp: string;

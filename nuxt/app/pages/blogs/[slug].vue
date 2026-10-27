@@ -31,7 +31,7 @@ useSeoMeta({
           class="absolute inset-0 h-full w-full object-cover opacity-90"
         />
         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30" />
-        <div class="container-site relative pb-14 pt-10 text-white lg:pb-20 lg:pt-14">
+        <div class="container-site relative pb-14 pt-28 text-white lg:pb-20 lg:pt-36">
           <div class="mb-6">
             <Breadcrumb light :items="[{ label: 'Blogs', href: '/blogs' }, { label: post.title }]" />
           </div>
